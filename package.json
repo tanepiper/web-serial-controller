@@ -5,7 +5,11 @@
     "test": "web-test-runner \"src/**/*.test.ts\""
   },
   "dependencies": {
-    "svelte": "^3.24.0"
+    "@rxjs-ninja/rxjs-utility": "^5.1.2",
+    "rxjs": "^6.6.3",
+    "sass": "^1.32.6",
+    "svelte": "^3.24.0",
+    "xp.css": "^0.2.4"
   },
   "devDependencies": {
     "@snowpack/plugin-dotenv": "^2.0.5",
@@ -16,6 +20,7 @@
     "@types/chai": "^4.2.13",
     "@types/mocha": "^8.2.0",
     "@types/snowpack-env": "^2.3.2",
+    "@types/w3c-web-serial": "^1.0.1",
     "@web/test-runner": "^0.12.0",
     "chai": "^4.2.0",
     "snowpack": "^3.0.1",
