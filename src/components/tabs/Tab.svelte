@@ -5,12 +5,16 @@
   const tab = {};
   const { registerTab, selectTab, selectedTab } = getContext(TABS);
 
-  export let disabled = false
+  export let disabled = false;
 
   registerTab(tab);
 </script>
 
-<style type='scss'>
+<button role="tab" {disabled} aria-selected={$selectedTab === tab} on:click={() => selectTab(tab)}>
+  <slot />
+</button>
+
+<style type="scss">
   button[disabled] {
     color: dimgray;
 
@@ -24,7 +28,3 @@
     }
   }
 </style>
-
-<button role='tab' disabled={disabled} aria-selected="{$selectedTab === tab}" on:click="{() => selectTab(tab)}">
-  <slot></slot>
-</button>

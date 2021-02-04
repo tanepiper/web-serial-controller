@@ -9,7 +9,7 @@
 </script>
 
 {#if $selectedPanel === panel}
-  <article role='tabpanel'>
-    <slot></slot>
+  <article role="tabpanel">
+    <slot />
   </article>
 {/if}

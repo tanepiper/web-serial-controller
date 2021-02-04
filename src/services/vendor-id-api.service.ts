@@ -1,6 +1,6 @@
 import { fromFetch } from 'rxjs/fetch';
 import { switchMap, tap } from 'rxjs/operators';
-import { throwError } from "rxjs";
+import { throwError } from 'rxjs';
 
 interface VendorListItem {
   name: string;
@@ -29,11 +29,11 @@ export class VendorIdApiService {
           if (response.ok) {
             return response.json();
           }
-          return throwError(`${response.status} : ${response.statusText}`)
+          return throwError(`${response.status} : ${response.statusText}`);
         }),
         tap((list) => {
           this.vendorList = list;
-        })
+        }),
       )
       .subscribe();
   }
@@ -44,7 +44,7 @@ export class VendorIdApiService {
    */
   public findByVendorId(id: string | number | undefined): string {
     if (!id) {
-      return 'Unknown'
+      return 'Unknown';
     }
     const found = this.vendorList.find((item) => item.field_vid === `${id}`);
     return found ? found.name : 'Unknown';

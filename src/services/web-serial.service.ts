@@ -180,12 +180,7 @@ export class WebSerialService {
       };
     }
 
-    fromWebSerial(
-      this.port,
-      this.writer$.asObservable(),
-      options,
-      this.stopCtrl.signal
-    )
+    fromWebSerial(this.port, this.writer$.asObservable(), options, this.stopCtrl.signal)
       .pipe(
         tapOnFirstEmit(() => {
           this.connectedValue$.next(true);
@@ -203,7 +198,7 @@ export class WebSerialService {
             ...state,
             connectionStatus: ApplicationStatus.DISCONNECTED,
           }));
-        })
+        }),
       )
       .subscribe();
   }

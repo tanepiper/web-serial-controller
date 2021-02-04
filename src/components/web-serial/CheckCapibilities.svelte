@@ -1,5 +1,4 @@
 <script>
-
   import { createEventDispatcher, onMount } from 'svelte';
 
   const dispatch = createEventDispatcher();
@@ -22,19 +21,24 @@
       }, 1000);
 
       dispatch('bsod', {
-        'canHaz': false
+        canHaz: false,
       });
     } else {
       dispatch('bsod', {
-        'canHaz': true
+        canHaz: true,
       });
     }
   });
-
 </script>
 
-<style type='scss'>
+<div class="bsod" class:display={displayBSOD} hidden={!displayBSOD}>
+  <div class="bsod-content">
+    <div class="bsod-header"><span>{headerText}</span></div>
+    <div class="bsod-body">{@html bodyText}</div>
+  </div>
+</div>
 
+<style type="scss">
   * {
     margin: 0;
     box-sizing: border-box;
@@ -45,7 +49,7 @@
   }
 
   .bsod {
-    font-family: "Lucida Console", "Lucida Sans Typewriter", monaco, "Bitstream Vera Sans Mono", monospace;
+    font-family: 'Lucida Console', 'Lucida Sans Typewriter', monaco, 'Bitstream Vera Sans Mono', monospace;
     background: rgb(0, 0, 170);
     position: fixed;
     z-index: 9999;
@@ -80,10 +84,3 @@
     transform: translateY(100%);
   }
 </style>
-
-<div class='bsod' class:display={displayBSOD} hidden={!displayBSOD}>
-  <div class='bsod-content'>
-    <div class='bsod-header'><span>{headerText}</span></div>
-    <div class='bsod-body'>{@html bodyText}</div>
-  </div>
-</div>

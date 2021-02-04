@@ -27,11 +27,10 @@ export const serialPortSettings = writable({
  */
 function connectedDeviceData() {
   const defaults: {
-    usbVendorId: number | undefined,
-    usbProductId: number | undefined,
-    usbVendorName: string,
-    usbProductName: string
-
+    usbVendorId: number | undefined;
+    usbProductId: number | undefined;
+    usbVendorName: string;
+    usbProductName: string;
   } = {
     usbVendorId: undefined,
     usbProductId: undefined,

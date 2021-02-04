@@ -1,5 +1,4 @@
-<script type='ts'>
-
+<script type="ts">
   import { createEventDispatcher } from 'svelte';
 
   const dispatch = createEventDispatcher();
@@ -13,32 +12,30 @@
   function baudRateChanges(index: number) {
     baudRate = supportedRates[index];
     dispatch('baudRateChange', {
-      baudRate
+      baudRate,
     });
   }
-
-
 </script>
 
 <fieldset>
   <legend>Baud Rate Selection</legend>
-  <div class='field-row'>
-    <label for='baudRate'>Baud Rate:</label>
+  <div class="field-row">
+    <label for="baudRate">Baud Rate:</label>
     <span>1200</span>
     <input
-      class='input-baud-rate'
-      id='baudRate'
-      type='range'
-      min='0'
-      max='7'
-      name='baudRate'
+      class="input-baud-rate"
+      id="baudRate"
+      type="range"
+      min="0"
+      max="7"
+      name="baudRate"
       bind:value={index}
       on:change={() => baudRateChanges(index)}
-      disabled={disabled}
+      {disabled}
     />
     <span>115200</span>
   </div>
-  <div class='window-body'>
-    Selected: <span class='selected-baud'>{baudRate}</span>
+  <div class="window-body">
+    Selected: <span class="selected-baud">{baudRate}</span>
   </div>
 </fieldset>
