@@ -19,7 +19,7 @@ module.exports = {
         // "bundle": true,
     },
     packageOptions: {
-        "knownEntrypoints": ["node_modules/xp.css/dist/XP.css"]
+  
     },
     devOptions: {
         /* ... */

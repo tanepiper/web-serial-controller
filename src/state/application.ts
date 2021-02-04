@@ -1,14 +1,38 @@
 import { writable } from 'svelte/store';
 import { vendorService } from '../services/vendor-id-api.service';
+import type { ApplicationStatus } from 'src/constants/application';
 
 /**
  * Current application settings and state
  */
-export const applicationSettings = writable({
-  lineEnding: '\n',
-  connectionStatus: 'Disconnected',
-  availableDevices: 0,
-});
+export function applicationSettingsData() {
+  const defaults: {
+    lineEnding: string;
+    connectionStatus: ApplicationStatus;
+    availableDevices: number;
+  } = {
+    lineEnding: '\n',
+    connectionStatus: 'Disconnected',
+    availableDevices: 0,
+  };
+
+  const { subscribe, set, update } = writable(defaults);
+
+  return {
+    subscribe,
+    set,
+    update,
+    addDevice: () => update((state) => ({ ...state, availableDevices: state.availableDevices + 1 })),
+    removeDevice: () =>
+      update((state) => {
+        if (state.availableDevices > 0) {
+          return { ...state, availableDevices: state.availableDevices - 1 };
+        } else {
+          return { ...state, availableDevices: 0 };
+        }
+      }),
+  };
+}
 
 /**
  * The Serial Port settings for creating a connection
@@ -54,4 +78,5 @@ function connectedDeviceData() {
   };
 }
 
+export const applicationSettings = applicationSettingsData();
 export const connectedDevice = connectedDeviceData();

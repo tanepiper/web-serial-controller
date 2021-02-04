@@ -111,17 +111,11 @@ export class WebSerialService {
     });
 
     navigator.serial.addEventListener('connect', (e) => {
-      applicationSettings.update((state) => ({
-        ...state,
-        availableDevices: state.availableDevices + 1,
-      }));
+      applicationSettings.addDevice();
     });
 
     navigator.serial.addEventListener('disconnect', (e) => {
-      applicationSettings.update((state) => ({
-        ...state,
-        availableDevices: state.availableDevices - 1,
-      }));
+      applicationSettings.removeDevice();
     });
   }
 
