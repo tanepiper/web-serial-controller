@@ -4,7 +4,9 @@
 
   import WindowContainer from './containers/WindowContainer.svelte';
   import { Tab, TabContainer, TabMenu, TabPanel } from './components/tabs';
+
   import TaskBar from './components/taskbar/Taskbar.svelte';
+
   import ConnectToDevice from './views/ConnectToDevice.svelte';
   import SendText from './views/SendText.svelte';
   import AboutApp from './views/AboutApp.svelte';
