@@ -1,22 +1,24 @@
 <script type="ts">
-  import { onDestroy } from 'svelte';
+  import { onMount } from 'svelte';
   import { applicationSettings } from '../../state/application';
   import { ApplicationStatus } from '../../constants/application';
 
   export let height = '40';
 
-  let clock;
-  let time = '';
+  let clock: HTMLDivElement;
+  $: time = '';
 
-  const timer = setInterval(() => {
-    const date = new Date();
-    const hour = date.getHours();
-    const min = date.getMinutes();
-    time = [hour < 10 ? `0${hour}` : hour, min < 10 ? `0${min}` : min].join(':');
-  }, 1000);
+  onMount(() => {
+    const timer = setInterval(() => {
+      const date = new Date();
+      const hour = date.getHours();
+      const min = date.getMinutes();
+      time = [hour < 10 ? `0${hour}` : hour, min < 10 ? `0${min}` : min].join(':');
+    }, 1000);
 
-  onDestroy(() => {
-    clearInterval(timer);
+    () => {
+      clearInterval(timer);
+    };
   });
 </script>
 
