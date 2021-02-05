@@ -7,9 +7,17 @@ import { localStorageSettings } from '../libs/create-subscription-storage';
  */
 export function applicationSettingsData() {
   const defaults: {
+    autoScroll: boolean;
     lineEnding: string;
+    echoLocal: boolean;
+    showKeyboards: boolean;
+    showTimestamp: boolean;
   } = {
+    autoScroll: true,
     lineEnding: '\n',
+    echoLocal: true,
+    showKeyboards: false,
+    showTimestamp: true
   };
 
   const { subscribe, set, update } = writable(defaults);
