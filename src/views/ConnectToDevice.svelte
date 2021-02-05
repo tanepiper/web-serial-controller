@@ -38,12 +38,14 @@
         {/if}
       </button>
     </div>
-    <div>
+    <div class="vendor-filter">
       <Select
+        inputAttributes={{ id: 'vendor-filter' }}
         isVirtualList={true}
         items={vendorService.vendorList}
         bind:selectedValue={connectionStatus.filterDevice}
         placeholder="Filter by Vendor ID"
+        listAutoWidth={false}
       />
     </div>
   </div>

@@ -1,6 +1,6 @@
 {
   "name": "@tinynodes/web-serial-controller",
-  "version": "0.5.0",
+  "version": "0.5.1-beta",
   "private": true,
   "scripts": {
     "start": "snowpack dev",
