@@ -74,7 +74,7 @@
     height: 20px;
     z-index: 200;
     padding: 5px 0 0 5px;
-    background: linear-gradient(180deg, #fcfcfe, #f4f3ee);
+    background: linear-gradient(180deg, #ece9d8, #f4f3ee);
     cursor: pointer;
   }
 
@@ -88,14 +88,17 @@
 
     .main-section,
     .quick-section {
-      height: 40px;
       flex-grow: 1;
+    }
+
+    .main-section {
+      height: 40px;
       background: linear-gradient(
           to bottom,
           var(--dark-color) 0%,
           #3f8cf3 9%,
           var(--dark-color) 18%,
-          var(--dark-color) 92%,
+          #3f8cf3 92%,
           #333 100%
         )
         center/cover no-repeat;
@@ -103,6 +106,7 @@
 
     .quick-section {
       width: 100px;
+      height: 38px;
       position: absolute;
       bottom: 0;
       right: 0;
@@ -110,6 +114,10 @@
       display: flex;
       flex-direction: row;
       justify-content: flex-end;
+      border-top: 2px solid var(--dark-color);
+      border-left: 2px solid rgba(0, 0, 0, 0.3);
+      background: linear-gradient(to bottom, #3f8cf3 0%, var(--light-color) 18%, var(--dark-color) 92%, #333 100%)
+        center/cover no-repeat;
 
       img {
         width: 24px;

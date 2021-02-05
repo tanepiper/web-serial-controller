@@ -141,9 +141,7 @@ export class WebSerialService {
     fromWebSerial(this.port, this.writer$.asObservable(), options, this.stopCtrl.signal)
       .pipe(
         tapOnFirstEmit(() => {
-          const info = this?.port?.getInfo();
-          console.log(info);
-          connectedDevice.setProduct(info || {});
+          connectedDevice.setProduct(this?.port?.getInfo() || {});
           this.connectedValue$.next(true);
           this.isConnected = true;
           connectionStatus.set(ApplicationStatus.CONNECTED);
