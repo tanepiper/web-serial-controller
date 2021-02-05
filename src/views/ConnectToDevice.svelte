@@ -40,6 +40,7 @@
     </div>
     <div class="vendor-filter">
       <Select
+        isDisabled={connectionStatus.isConnected}
         inputAttributes={{ id: 'vendor-filter' }}
         isVirtualList={true}
         items={vendorService.vendorList}
