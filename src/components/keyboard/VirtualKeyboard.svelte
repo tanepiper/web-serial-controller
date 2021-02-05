@@ -32,7 +32,8 @@
 
 <fieldset>
   <legend
-    >{keyboardName} Keyboard <span class="help" on:click={() => (displayHelp = !displayHelp)}><strong>(?)</strong></span>
+    >{keyboardName} Keyboard
+    <span class="help" on:click={() => (displayHelp = !displayHelp)}><strong>(?)</strong></span>
   </legend>
   {#each keyValues as key, i}
     <button class="key-button" on:click={() => onKeyPress(i)}>

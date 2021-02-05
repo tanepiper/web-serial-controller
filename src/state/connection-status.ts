@@ -33,7 +33,7 @@ function createConnectionStatus() {
         isConnected: status === ApplicationStatus.CONNECTED,
         isConnecting: [ApplicationStatus.AWAITING_PORT, ApplicationStatus.CONNECTING].includes(status as any),
         displayText: getDisplayText(status),
-        message
+        message,
       });
     },
   };
