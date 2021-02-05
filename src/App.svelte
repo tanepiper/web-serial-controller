@@ -17,8 +17,6 @@
   import { vendorService } from './services/vendor-id-api.service';
   import { connectionStatus } from './state/connection-status';
 
-  const backgroundImage = '/windows-background.jpg';
-
   export let name: string;
   export let appVersion: string;
 
@@ -51,7 +49,7 @@
 <CheckCapabilities on:bsod={onCapability} />
 <GlobalKeyboardListener on:keyEvent={eventTypeHandler} />
 
-<div class="background" style="background-image: url('{backgroundImage}')">
+<div class="background">
   <div class="wrapper">
     <WindowContainer title={`${name} ${appVersion}`} close={false}>
       <TabContainer>
@@ -99,13 +97,6 @@
 </div>
 
 <style type="scss">
-  .background {
-    height: 100%;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-  }
-
   .wrapper {
     padding-top: 100px;
   }
