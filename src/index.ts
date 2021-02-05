@@ -1,9 +1,12 @@
 import App from './App.svelte';
 
+const appVersion = import.meta.env.SNOWPACK_PUBLIC_APP_VERSION;
+
 const app = new App({
   target: document.body,
   props: {
     name: 'Web Serial Controller',
+    appVersion
   },
 });
 

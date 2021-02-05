@@ -1,5 +1,8 @@
+<script type="ts">
+  export let appVersion = '';
+</script>
 <fieldset>
-  <legend>About App</legend>
+  <legend>About Web Serial Controller (Version {appVersion})</legend>
   <div class="window-body">
     Welcome to the Web Serial Connector Application. If you are not seeing a Blue Screen Of Death then congratulations!
     You can use the Web Serial API.

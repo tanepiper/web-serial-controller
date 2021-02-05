@@ -1,8 +1,9 @@
 <script type="ts">
-  import { createEventDispatcher, onMount } from 'svelte';
+  import { onMount } from 'svelte';
   import { IMAGES } from '../../constants/images';
   import { getOffset } from '../../libs/dom';
   import { timeString } from '../../libs/time';
+  import { createEventDispatcher } from '../../libs/event-dispatcher';
 
   const dispatcher = createEventDispatcher();
 
@@ -16,11 +17,10 @@
   $: time = '';
   let position;
 
-  function disconnectHandler() {
-    dispatcher('taskEvent', {
-      type: 'disconnect',
+  function eventDispatch() {
+    dispatcher.dispatch('taskEvent', { type: 'disconnect' }, () => {
+      showMenu = false;
     });
-    showMenu = false;
   }
 
   onMount(() => {
@@ -29,9 +29,8 @@
     eject.addEventListener('contextmenu', (e) => {
       e.preventDefault();
       if (!showMenu) {
-        position = `top: ${getOffset(eject).top - (menu.clientHeight - 10)}px; left: ${
-          getOffset(eject).left - menu.clientWidth
-        }px`;
+        const offset = getOffset(eject);
+        position = `top: ${offset.top - (menu.clientHeight - 10)}px; left: ${offset.left - menu.clientWidth}px`;
       }
       showMenu = !showMenu;
     });
@@ -54,9 +53,7 @@
   </div>
 </div>
 
-<div class="menu" class:hidden={!showMenu} style={position} bind:this={menu} on:click={disconnectHandler}>
-  Eject Device
-</div>
+<div class="menu" class:hidden={!showMenu} style={position} bind:this={menu} on:click={eventDispatch}>Eject Device</div>
 
 <style type="scss">
   :root {

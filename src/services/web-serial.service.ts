@@ -32,12 +32,6 @@ export class WebSerialService {
   private port: SerialPort | undefined;
 
   /**
-   * The boolean connection state
-   * @private
-   */
-  private connectedValue$ = new BehaviorSubject<boolean>(false);
-
-  /**
    * Internal writer to the port
    * @private
    */
@@ -61,11 +55,6 @@ export class WebSerialService {
   public get stream$(): Observable<Uint8Array> {
     return this.output$.asObservable();
   }
-
-  /**
-   * Static property to get if there is a open connection
-   */
-  public isConnected = false;
 
   /**
    * Line ending for use with sending messages
@@ -142,8 +131,6 @@ export class WebSerialService {
       .pipe(
         tapOnFirstEmit(() => {
           connectedDevice.setProduct(this?.port?.getInfo() || {});
-          this.connectedValue$.next(true);
-          this.isConnected = true;
           connectionStatus.set(ApplicationStatus.CONNECTED);
         }),
 

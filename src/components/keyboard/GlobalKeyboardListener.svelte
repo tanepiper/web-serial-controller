@@ -1,23 +1,17 @@
 <script type="ts">
-  import { createEventDispatcher } from 'svelte';
+    import { createEventDispatcher } from '../../libs/event-dispatcher';
 
-  const dispatcher = createEventDispatcher();
+    const dispatcher = createEventDispatcher();
 
-  function dispatch(typeName: string) {
-    dispatcher('keyEvent', {
-      type: typeName,
-    });
-  }
-
-  async function handleKeyDown(event: KeyboardEvent) {
-    if (event.ctrlKey) {
-      if (event.code === 'KeyC') {
-        dispatch('connect');
-      } else if (event.code === 'KeyD') {
-        dispatch('disconnect');
-      }
+    async function handleKeyDown(event: KeyboardEvent) {
+        if (event.ctrlKey) {
+            if (event.code === 'KeyC') {
+                dispatcher.dispatch('keyEvent', {type: 'connect'});
+            } else if (event.code === 'KeyD') {
+                dispatcher.dispatch('keyEvent', {type: 'disconnect'});
+            }
+        }
     }
-  }
 </script>
 
-<svelte:window on:keydown={handleKeyDown} />
+<svelte:window on:keydown={handleKeyDown}/>
