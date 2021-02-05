@@ -3,8 +3,6 @@
 
   const dispatcher = createEventDispatcher();
 
-  export let portOptions;
-
   function dispatch(typeName: string) {
     dispatcher('keyEvent', {
       type: typeName,

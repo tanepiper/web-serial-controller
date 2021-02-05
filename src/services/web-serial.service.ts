@@ -32,22 +32,10 @@ export class WebSerialService {
   private port: SerialPort | undefined;
 
   /**
-   * Store the current device info
-   * @private
-   */
-  private deviceInfoValue$ = new Subject<SerialPortInfo>();
-
-  /**
    * The boolean connection state
    * @private
    */
   private connectedValue$ = new BehaviorSubject<boolean>(false);
-
-  /**
-   * Internal connection status
-   * @private
-   */
-  private statusValue$ = new BehaviorSubject<SerialStatus>('disconnected');
 
   /**
    * Internal writer to the port
@@ -75,13 +63,6 @@ export class WebSerialService {
   }
 
   /**
-   * Device Info
-   */
-  public get deviceInfo$(): Observable<SerialPortInfo> {
-    return this.deviceInfoValue$.asObservable();
-  }
-
-  /**
    * Static property to get if there is a open connection
    */
   public isConnected = false;
@@ -97,10 +78,6 @@ export class WebSerialService {
     }
     WebSerialService._instance = this;
     connectionStatus.set(ApplicationStatus.DISCONNECTED);
-    applicationSettings.update((state) => ({
-      ...state,
-      connectionStatus: ApplicationStatus.DISCONNECTED,
-    }));
   }
 
   public setupListeners() {
@@ -133,21 +110,11 @@ export class WebSerialService {
       this.disconnect();
     }
     connectionStatus.set(ApplicationStatus.AWAITING_PORT);
-    applicationSettings.update((state) => ({
-      ...state,
-      connectionStatus: ApplicationStatus.AWAITING_PORT,
-    }));
 
     try {
       this.port = await navigator.serial.requestPort(options);
-      connectedDevice.setProduct(this.port.getInfo());
     } catch (e) {
       connectionStatus.set(ApplicationStatus.USER_CANCELLED);
-      applicationSettings.update((state) => ({
-        ...state,
-        connectionStatus: ApplicationStatus.USER_CANCELLED,
-      }));
-      throw e;
     }
   }
 
@@ -160,17 +127,9 @@ export class WebSerialService {
   public connect(options?: SerialOptions, pageUnload?: AbortSignal): void {
     if (!this.port) {
       connectionStatus.set(ApplicationStatus.ERROR, 'Cannot connect to device without an open port.');
-      applicationSettings.update((state) => ({
-        ...state,
-        connectionStatus: ApplicationStatus.ERROR,
-      }));
       return;
     }
     connectionStatus.set(ApplicationStatus.CONNECTING);
-    applicationSettings.update((state) => ({
-      ...state,
-      connectionStatus: ApplicationStatus.CONNECTING,
-    }));
     this.stopCtrl = new AbortController();
 
     if (pageUnload) {
@@ -182,23 +141,18 @@ export class WebSerialService {
     fromWebSerial(this.port, this.writer$.asObservable(), options, this.stopCtrl.signal)
       .pipe(
         tapOnFirstEmit(() => {
+          const info = this?.port?.getInfo();
+          console.log(info);
+          connectedDevice.setProduct(info || {});
           this.connectedValue$.next(true);
           this.isConnected = true;
           connectionStatus.set(ApplicationStatus.CONNECTED);
-          applicationSettings.update((state) => ({
-            ...state,
-            connectionStatus: ApplicationStatus.CONNECTED,
-          }));
         }),
 
         tap((value) => this.output$.next(value)),
         finalize(() => {
           connectedDevice.reset();
           connectionStatus.set(ApplicationStatus.DISCONNECTED);
-          applicationSettings.update((state) => ({
-            ...state,
-            connectionStatus: ApplicationStatus.DISCONNECTED,
-          }));
         }),
       )
       .subscribe();
