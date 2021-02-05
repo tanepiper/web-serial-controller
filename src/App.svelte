@@ -37,8 +37,8 @@
     } else if (type === 'connect') {
       try {
         if (filterDevice) {
-          const val = { usbVendorId: parseInt(`0x${parseInt(filterDevice.value, 10)}`).toString(16) };
-          await serialService.requestPort({ filters: [val as any] });
+          const val = { usbVendorId: parseInt(filterDevice.value, 10) };
+          await serialService.requestPort({ filters: [val] });
         } else {
           await serialService.requestPort();
         }
