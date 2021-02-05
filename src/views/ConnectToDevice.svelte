@@ -1,9 +1,8 @@
 <script type="ts">
   import BaudRate from '../components/web-serial/BaudRate.svelte';
-  import { serialService } from '../services/web-serial.service.ts';
   import { LineEndings } from '../constants/application';
 
-  import { createEventDispatcher } from 'svelte';
+  import { createEventDispatcher } from '../libs/event-dispatcher';
 
   const dispatcher = createEventDispatcher();
 
@@ -13,22 +12,11 @@
   export let connectionStatus;
   export let appSettings;
 
-  function dispatch(typeName: string) {
-    dispatcher('change', {
-      type: typeName,
-    });
-  }
-
   async function toggleConnection() {
     if (connectionStatus.isConnecting) {
       return;
     }
-
-    if (connectionStatus.isConnected) {
-      dispatch('disconnect');
-    } else {
-      dispatch('connect');
-    }
+    dispatcher.dispatch('change', { type: connectionStatus.isConnected ? 'disconnect' : 'connect' });
   }
 </script>
 

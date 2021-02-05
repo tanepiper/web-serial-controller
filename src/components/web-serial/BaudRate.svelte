@@ -1,5 +1,5 @@
 <script type="ts">
-  import { createEventDispatcher } from 'svelte';
+  import { createEventDispatcher, onMount } from 'svelte';
 
   const dispatch = createEventDispatcher();
 
@@ -15,6 +15,10 @@
       baudRate,
     });
   }
+
+  onMount(() => {
+    index = supportedRates.indexOf(baudRate);
+  });
 </script>
 
 <fieldset>

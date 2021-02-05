@@ -8,6 +8,7 @@
   const dispatcher = createEventDispatcher();
 
   export let connectionStatus;
+  export let connectedDevice;
 
   let showMenu = false;
   let clock: HTMLDivElement;
@@ -53,7 +54,9 @@
   </div>
 </div>
 
-<div class="menu" class:hidden={!showMenu} style={position} bind:this={menu} on:click={eventDispatch}>Eject Device</div>
+<div class="menu" class:hidden={!showMenu} style={position} bind:this={menu} on:click={eventDispatch}>
+  Eject {connectedDevice.usbVendorName} Device
+</div>
 
 <style type="scss">
   :root {
@@ -67,10 +70,10 @@
 
   .menu {
     position: absolute;
-    width: 120px;
+    min-width: 120px;
     height: 20px;
     z-index: 200;
-    padding: 5px 0 0 5px;
+    padding: 5px 10px 0 5px;
     background: linear-gradient(180deg, #ece9d8, #f4f3ee);
     cursor: pointer;
   }

@@ -1,6 +1,7 @@
 <script type="ts">
   export let appVersion = '';
 </script>
+
 <fieldset>
   <legend>About Web Serial Controller (Version {appVersion})</legend>
   <div class="window-body">

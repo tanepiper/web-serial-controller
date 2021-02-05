@@ -6,7 +6,7 @@ const app = new App({
   target: document.body,
   props: {
     name: 'Web Serial Controller',
-    appVersion
+    appVersion,
   },
 });
 

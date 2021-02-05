@@ -113,7 +113,7 @@
 
   .draggable {
     position: absolute;
-    z-index: 100;
+    z-index: 999;
     top: calc(25%);
     left: calc(25%);
   }
@@ -126,11 +126,12 @@
     min-height: calc(var(--window-height) - 1rem);
   }
 
-  //.modal {
-  //  position: absolute;
-  //  top: 50%;
-  //  left: 50%;
-  //  margin-top: -50px;
-  //  margin-left: -50px;
-  //}
+  .modal {
+    position: absolute;
+    z-index: 999;
+    top: 50%;
+    left: 50%;
+    margin-top: -50px;
+    margin-left: -50px;
+  }
 </style>
