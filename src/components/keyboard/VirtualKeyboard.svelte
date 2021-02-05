@@ -4,10 +4,8 @@
 
   const dispatch = createEventDispatcher();
 
-  /**
-   * List of Emoji symbols to add to the Emoji Keyboard
-   */
-  export let emojiSymbols = ['😁', '😂', '😍', '🐶', '😺', '🦉', '😎', '😤', '🥳', '💩', '💯', '🥷', '👾', '🤖'];
+  export let keyboardName = 'Virtual Keyboard';
+  export let keyValues: Array<string | number> = [];
 
   let displayHelp = false;
 
@@ -15,16 +13,16 @@
    * When a button or key is pressed, emit the emoji for that passed index
    * @param index
    */
-  function onEmoji(index: number) {
-    dispatch('emojiChange', {
-      emoji: emojiSymbols[index],
+  function onKeyPress(index: number) {
+    dispatch('keyPress', {
+      key: keyValues[index],
     });
   }
 
   function handleKeyDown(event: KeyboardEvent) {
     if (event.ctrlKey) {
       if (event.code.includes('Digit')) {
-        onEmoji(parseInt(event.key));
+        onKeyPress(parseInt(event.key));
       }
     }
   }
@@ -34,17 +32,17 @@
 
 <fieldset>
   <legend
-    >Emoji Keyboard <span class="help" on:click={() => (displayHelp = !displayHelp)}><strong>(?)</strong></span>
+    >{keyboardName} Keyboard <span class="help" on:click={() => (displayHelp = !displayHelp)}><strong>(?)</strong></span>
   </legend>
-  {#each emojiSymbols as emoji, i}
-    <button class="emoji-button" on:click={() => onEmoji(i)}>
-      {emoji}
+  {#each keyValues as key, i}
+    <button class="key-button" on:click={() => onKeyPress(i)}>
+      {key}
     </button>
   {/each}
 </fieldset>
 
 <WindowContainer
-  title="Emoji Keyboard Help"
+  title="{keyboardName} Help"
   isModal={true}
   isDraggable={true}
   bind:display={displayHelp}
@@ -55,7 +53,7 @@
   height="140px"
 >
   <div class="window-body">
-    To use the Emoji keyboard, click on the buttons to append to the text box, or use the keyboard keys
+    To use the {keyboardName} keyboard, click on the buttons to append to the text box, or use the keyboard keys
     <strong>Ctrl</strong> and numbers 0-9
   </div>
   <section class="field-row" style="justify-content: flex-end">

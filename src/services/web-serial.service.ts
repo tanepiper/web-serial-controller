@@ -4,6 +4,7 @@ import { finalize, tap } from 'rxjs/operators';
 
 import { applicationSettings, connectedDevice } from '../state/application';
 import { ApplicationStatus } from '../constants/application';
+import {connectionStatus} from '../state/connection-status'
 
 export interface SerialPortInfo {
   usbVendorId: number;
@@ -95,6 +96,7 @@ export class WebSerialService {
       return WebSerialService._instance;
     }
     WebSerialService._instance = this;
+    connectionStatus.set(ApplicationStatus.DISCONNECTED)
     applicationSettings.update((state) => ({
       ...state,
       connectionStatus: ApplicationStatus.DISCONNECTED,
@@ -130,6 +132,7 @@ export class WebSerialService {
     if (this.stopCtrl && !this.stopCtrl.signal.aborted) {
       this.disconnect();
     }
+    connectionStatus.set(ApplicationStatus.AWAITING_PORT)
     applicationSettings.update((state) => ({
       ...state,
       connectionStatus: ApplicationStatus.AWAITING_PORT,
@@ -139,6 +142,7 @@ export class WebSerialService {
       this.port = await navigator.serial.requestPort(options);
       connectedDevice.setProduct(this.port.getInfo());
     } catch (e) {
+      connectionStatus.set(ApplicationStatus.USER_CANCELLED)
       applicationSettings.update((state) => ({
         ...state,
         connectionStatus: ApplicationStatus.USER_CANCELLED,
@@ -155,13 +159,14 @@ export class WebSerialService {
    */
   public connect(options?: SerialOptions, pageUnload?: AbortSignal): void {
     if (!this.port) {
+      connectionStatus.set(ApplicationStatus.ERROR, 'Cannot connect to device without an open port.')
       applicationSettings.update((state) => ({
         ...state,
         connectionStatus: ApplicationStatus.ERROR,
       }));
       return;
     }
-
+    connectionStatus.set(ApplicationStatus.CONNECTING)
     applicationSettings.update((state) => ({
       ...state,
       connectionStatus: ApplicationStatus.CONNECTING,
@@ -179,6 +184,7 @@ export class WebSerialService {
         tapOnFirstEmit(() => {
           this.connectedValue$.next(true);
           this.isConnected = true;
+          connectionStatus.set(ApplicationStatus.CONNECTED)
           applicationSettings.update((state) => ({
             ...state,
             connectionStatus: ApplicationStatus.CONNECTED,
@@ -188,6 +194,7 @@ export class WebSerialService {
         tap((value) => this.output$.next(value)),
         finalize(() => {
           connectedDevice.reset();
+          connectionStatus.set(ApplicationStatus.DISCONNECTED);
           applicationSettings.update((state) => ({
             ...state,
             connectionStatus: ApplicationStatus.DISCONNECTED,

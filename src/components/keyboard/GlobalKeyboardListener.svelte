@@ -1,20 +1,25 @@
 <script type="ts">
-  import { serialService } from '../../services/web-serial.service';
+    import { createEventDispatcher } from 'svelte';
 
-  export let portOptions;
+    const dispatcher = createEventDispatcher();
 
-  async function handleKeyDown(event: KeyboardEvent) {
-    if (event.ctrlKey) {
-      if (event.code === 'KeyC') {
-        try {
-          await serialService.requestPort();
-          serialService.connect(portOptions as SerialOptions);
-        } catch {}
-      } else if (event.code === 'KeyD') {
-        serialService.disconnect();
-      }
+    export let portOptions;
+
+    function dispatch(typeName: string) {
+        dispatcher('keyEvent', {
+            type: typeName
+        })
     }
-  }
+
+    async function handleKeyDown(event: KeyboardEvent) {
+        if (event.ctrlKey) {
+            if (event.code === 'KeyC') {
+                dispatch('connect');
+            } else if (event.code === 'KeyD') {
+                dispatch('disconnect');
+            }
+        }
+    }
 </script>
 
-<svelte:window on:keydown={handleKeyDown} />
+<svelte:window on:keydown={handleKeyDown}/>

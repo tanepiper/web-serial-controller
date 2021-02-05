@@ -1,6 +1,6 @@
 import { writable } from 'svelte/store';
 import { vendorService } from '../services/vendor-id-api.service';
-import type { ApplicationStatus } from 'src/constants/application';
+import { ApplicationStatus } from '../constants/application';
 
 /**
  * Current application settings and state
@@ -12,7 +12,7 @@ export function applicationSettingsData() {
     availableDevices: number;
   } = {
     lineEnding: '\n',
-    connectionStatus: 'Disconnected',
+    connectionStatus: ApplicationStatus.DISCONNECTED,
     availableDevices: 0,
   };
 
@@ -56,8 +56,8 @@ function connectedDeviceData() {
     usbVendorName: string;
     usbProductName: string;
   } = {
-    usbVendorId: undefined,
-    usbProductId: undefined,
+    usbVendorId: -1,
+    usbProductId: -1,
     usbVendorName: 'Unknown',
     usbProductName: 'Unknown',
   };
