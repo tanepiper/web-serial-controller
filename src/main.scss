@@ -5,6 +5,24 @@ html {
   overflow: hidden;
 }
 
+@keyframes move-bg {
+  0% {
+    opacity: 0;
+  }
+  25% {
+    opacity: 0.25;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  75% {
+    opacity: 0.75;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
 body {
   background-color: #0053ee;
   height: 100%;
@@ -12,4 +30,5 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
   background-image: url('/windows-background.jpg');
+  animation: move-bg 1s steps(10);
 }
