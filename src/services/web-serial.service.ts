@@ -51,6 +51,8 @@ export class WebSerialService {
     return this.output$.asObservable();
   }
 
+  private userCancelled = false;
+
   constructor() {
     if (WebSerialService._instance) {
       return WebSerialService._instance;
@@ -85,12 +87,14 @@ export class WebSerialService {
     if (this.stopCtrl && !this.stopCtrl.signal.aborted) {
       this.disconnect();
     }
+    this.userCancelled = false;
     connectionStatus.status(ApplicationStatus.AWAITING_PORT);
 
     try {
       this.port = await navigator.serial.requestPort(options);
     } catch (e) {
       connectionStatus.status(ApplicationStatus.USER_CANCELLED);
+      this.userCancelled = true;
     }
   }
 
@@ -102,7 +106,9 @@ export class WebSerialService {
    */
   public connect(options?: SerialOptions, pageUnload?: AbortSignal): void {
     if (!this.port) {
-      connectionStatus.status(ApplicationStatus.ERROR, 'Cannot connect to device without an open port.');
+      if (!this.userCancelled) {
+        connectionStatus.status(ApplicationStatus.ERROR, 'Cannot connect to device without an open port.');
+      }
       return;
     }
     connectionStatus.status(ApplicationStatus.CONNECTING);

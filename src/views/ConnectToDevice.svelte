@@ -1,8 +1,10 @@
 <script type="ts">
+  import Select from 'svelte-select';
   import BaudRate from '../components/web-serial/BaudRate.svelte';
   import { LineEndings } from '../constants/application';
 
   import { createEventDispatcher } from '../libs/event-dispatcher';
+  import { vendorService } from '../services/vendor-id-api.service';
 
   const dispatcher = createEventDispatcher();
 
@@ -36,7 +38,20 @@
         {/if}
       </button>
     </div>
+    <div>
+      <Select
+        isVirtualList={true}
+        items={vendorService.vendorList}
+        bind:selectedValue={connectionStatus.filterDevice}
+        placeholder="Filter by Vendor ID"
+      />
+    </div>
   </div>
+  {#if connectionStatus.message}
+    <div>
+      {connectionStatus.message}
+    </div>
+  {/if}
 </div>
 
 <BaudRate bind:baudRate={portOptions.baudRate} disabled={connectionStatus.isConnected} />
@@ -157,5 +172,9 @@
   div,
   fieldset {
     flex: 1;
+  }
+
+  #filter-device {
+    border-bottom: 1px solid lightgray;
   }
 </style>

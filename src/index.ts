@@ -2,11 +2,18 @@ import App from './App.svelte';
 
 const appVersion = import.meta.env.SNOWPACK_PUBLIC_APP_VERSION;
 
+import { applicationSettings, connectedDevice, serialPortSettings } from './state/application';
+import { connectionStatus } from './state/connection-status';
+
 const app = new App({
   target: document.body,
   props: {
     name: 'Web Serial Controller',
     appVersion,
+    applicationSettings,
+    serialPortSettings,
+    connectedDevice,
+    connectionStatus,
   },
 });
 

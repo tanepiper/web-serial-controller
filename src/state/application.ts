@@ -17,7 +17,7 @@ export function applicationSettingsData() {
     lineEnding: '\n',
     echoLocal: true,
     showKeyboards: false,
-    showTimestamp: true
+    showTimestamp: true,
   };
 
   const { subscribe, set, update } = writable(defaults);

@@ -8,6 +8,7 @@ export interface ConnectionStatus {
   isConnecting: boolean;
   displayText: string;
   message?: string;
+  filterDevice: string | undefined;
 }
 
 function createConnectionStatus() {
@@ -27,6 +28,7 @@ function createConnectionStatus() {
     isConnecting: false,
     displayText: getDisplayText(ApplicationStatus.DISCONNECTED),
     message: undefined,
+    filterDevice: undefined,
   });
 
   return {

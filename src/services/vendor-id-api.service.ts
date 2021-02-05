@@ -3,8 +3,8 @@ import { switchMap, tap } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 
 interface VendorListItem {
-  name: string;
-  field_vid: string;
+  label: string;
+  value: string;
 }
 
 export class VendorIdApiService {
@@ -13,7 +13,7 @@ export class VendorIdApiService {
    */
   static _instance: VendorIdApiService;
 
-  private vendorList: VendorListItem[] = [];
+  public vendorList: VendorListItem[] = [];
 
   constructor() {
     if (VendorIdApiService._instance) {
@@ -38,6 +38,10 @@ export class VendorIdApiService {
       .subscribe();
   }
 
+  public searchVendor(name: string) {
+    return this.vendorList.filter((items) => items.label.toLowerCase().includes(name.toLowerCase()));
+  }
+
   /**
    * Find vendor by ID
    * @param id
@@ -46,8 +50,8 @@ export class VendorIdApiService {
     if (!id) {
       return 'Unknown';
     }
-    const found = this.vendorList.find((item) => item.field_vid === `${id}`);
-    return found ? found.name : 'Unknown';
+    const found = this.vendorList.find((item) => item.value === `${id}`);
+    return found ? found.label : 'Unknown';
   }
 }
 
