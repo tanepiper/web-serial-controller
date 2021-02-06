@@ -13,7 +13,6 @@
   import AboutApp from './views/AboutApp.svelte';
 
   import { serialService } from './services/web-serial.service';
-  import { vendorService } from './services/vendor-id-api.service';
 
   export let name: string;
   export let appVersion: string;
@@ -25,7 +24,6 @@
 
   async function onCapability({ detail }: CustomEvent) {
     if (detail.canHaz) {
-      vendorService.getVendorList();
       await serialService.setupListeners();
     }
   }

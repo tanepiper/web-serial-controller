@@ -4,7 +4,7 @@
   import { LineEndings } from '../constants/application';
 
   import { createEventDispatcher } from '../libs/event-dispatcher';
-  import { vendorService } from '../services/vendor-id-api.service';
+  import {vendorStore} from '../state/vendors'
 
   const dispatcher = createEventDispatcher();
 
@@ -43,7 +43,7 @@
         isDisabled={connectionStatus.isConnected}
         inputAttributes={{ id: 'vendor-filter' }}
         isVirtualList={true}
-        items={vendorService.vendorList}
+        items={$vendorStore}
         bind:selectedValue={connectionStatus.filterDevice}
         placeholder="Filter by Vendor ID"
         listAutoWidth={false}
