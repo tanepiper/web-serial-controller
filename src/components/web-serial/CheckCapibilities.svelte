@@ -7,8 +7,8 @@
   export let bodyText = `
   <p>A problem has been detected with your browser and you tab has been shut down to prevent further problems.</p>
   <p>This demo requires the <a href='https://wicg.github.io/serial/' style='color: white; text-decoration: underline;'>Web Serial API</a> but it is unsupported by your browser.</p>
-  <p>You need Chrome or Blink 89 to use the feature unflagged.</p>
-  <p>For for earlier versions to turn on Experimental Web Features in <code>chrome:///flags</code>.</p>
+  <p>You need Chrome or Blink 89 to use the feature unflagged. (Unfortunatly <a href="https://github.com/mozilla/standards-positions/issues/336" style='color: white; text-decoration: underline;'>it won't be in Firefox any time soon</a>)</p>
+  <p>For for earlier versions to turn on Experimental Web Features in <code>chrome:///flags</code> or <code>edge:///flags</code>.</p>
   <p><a href='https://tane.dev' style='color: white; text-decoration: underline;'>tane.dev</a> | <a href='https://github.com/tanepiper/web-serial-controller' style='color: white; text-decoration: underline;'>Source Code</a></a></p>
 `;
 
