@@ -48799,6 +48799,12 @@ const ALL_VENDORS = [
 
 exports.handler = function (event, context, callback) {
     const name = event.queryStringParameters.name;
+    if (!name) {
+        callback(null, {
+            statusCode: 200,
+            body: JSON.stringify({vendors: ALL_VENDORS, total: ALL_VENDORS.length})
+        })
+    }
     const vendors = ALL_VENDORS.filter(item => item.label.toLowerCase().includes(name.toLowerCase()));
     callback(null, {
         statusCode: 200,

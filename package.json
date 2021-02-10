@@ -14,9 +14,7 @@
     "@sveltejs/svelte-virtual-list": "^3.0.1",
     "rxjs": "^6.6.3",
     "sass": "^1.32.6",
-    "simple-svelte-autocomplete": "^1.2.4",
     "svelte": "^3.24.0",
-    "svelte-autocomplete-select": "^1.0.5",
     "svelte-select": "^3.16.1",
     "xp.css": "^0.2.4"
   },
